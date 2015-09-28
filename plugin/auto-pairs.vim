@@ -57,7 +57,7 @@ endif
 " When skipping the closed pair, look at the current and
 " next line as well.
 if !exists('g:AutoPairsMultilineClose')
-  let g:AutoPairsMultilineClose = 1
+  let g:AutoPairsMultilineClose = 0
 endif
 
 " Work with Fly Mode, insert pair where jumped
@@ -99,6 +99,11 @@ function! AutoPairsInsert(key)
     return a:key
   end
 
+  " Ignore auto close if next character is some non-whitespace, no-parenthesis character 
+  if next_char != '' && next_char != ' ' && next_char != "'" && next_char != ']' && next_char != ')' && next_char != '}'
+    return a:key
+  end
+
   " The key is difference open-pair, then it means only for ) ] } by default
   if !has_key(b:AutoPairs, a:key)
     let b:autopairs_saved_pair = [a:key, getpos('.')]
@@ -116,6 +121,9 @@ function! AutoPairsInsert(key)
 
       " Skip the character if closed pair is next character
       if current_char == ''
+        "let next_lineno = line('.')+1
+        "let next_line = getline(nextnonblank(next_lineno))
+        "let next_char = matchstr(next_line, '\s*\zs.')
         if g:AutoPairsMultilineClose
           let next_lineno = line('.')+1
           let next_line = getline(nextnonblank(next_lineno))

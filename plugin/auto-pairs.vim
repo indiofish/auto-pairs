@@ -100,10 +100,11 @@ function! AutoPairsInsert(key)
   end
 
   " Ignore auto close if next character is some non-whitespace, no-parenthesis character 
-  if next_char != '' && next_char != ' ' && next_char != "'" && next_char != ']' && next_char != ')' && next_char != '}'
+  " Use a dumb dictionary to use has_key
+  if next_char != '' && !has_key({' ':0, "'":0, ']':0, ')':0, '}':0},next_char)
     return a:key
   end
-
+  
   " The key is difference open-pair, then it means only for ) ] } by default
   if !has_key(b:AutoPairs, a:key)
     let b:autopairs_saved_pair = [a:key, getpos('.')]

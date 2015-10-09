@@ -133,7 +133,7 @@ function! AutoPairsInsert(key)
           let next_char = matchstr(line, '\s*\zs.')
         end
         if next_char == a:key
-          return "\<ESC>e^a"
+          "return "\<ESC>e^a"
         endif
       endif
     endif

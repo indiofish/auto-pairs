@@ -101,7 +101,7 @@ function! AutoPairsInsert(key)
 
   " Ignore auto close if next character is some non-whitespace, no-parenthesis character 
   " Use a dumb dictionary to use has_key
-  if next_char != '' && !has_key({' ':0, "'":0, ']':0, ')':0, '}':0},current_char)
+  if next_char != '' && !has_key({' ':0, "'":0, ']':0, ')':0, '}':0},next_char)
     return a:key
   end
   
